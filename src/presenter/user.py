@@ -12,6 +12,14 @@ def get_users() -> List[User]:
         users.append(u)
     return users
 
+def get_user_by_id(val) ->List[User]:
+    json_users = user.get_users()
+    users =[]
+    for json_user in json_users:
+        u = User(json_user.get("id"), json_user.get("username"))
+        if u.id==val:
+            users.append(u)
+    return users
 
 def add_user(user_name):
     user_id = len(user.get_users()) + 1
