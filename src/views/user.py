@@ -1,14 +1,24 @@
 from flask import Blueprint
 from flask import jsonify, make_response, request
-from presenter.user import get_users, add_user
+from presenter.user import get_users, add_user, get_user_by_id
 import json
+
 
 user_views = Blueprint("user", __name__)
 
 
 @user_views.route('/users', methods=['GET'])
-def get_users():
+def get_user():
     users = get_users()
+    r = []
+    for user in users:
+        r.append(user.__dict__)
+    return make_response(jsonify({"users": r}), 200)
+
+@user_views.route('/user', methods=['GET'])
+def get_single_user():
+    val = int(request.args.get("id"))
+    users = get_user_by_id(val)
     r = []
     for user in users:
         r.append(user.__dict__)
